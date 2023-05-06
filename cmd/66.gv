@@ -1,0 +1,98 @@
+digraph gocallvis {
+    label="github.com/yongman/leto/cmd";
+    labeljust="l";
+    fontname="Arial";
+    fontsize="14";
+    rankdir="LR";
+    bgcolor="lightgray";
+    style="solid";
+    penwidth="0.5";
+    pad="0.0";
+    nodesep="0.35";
+
+    node [shape="box" style="filled,rounded" fillcolor="honeydew" fontname="Verdana" penwidth="1.0" margin="0.05,0.0"];
+    edge [minlen="2"]
+
+    subgraph "cluster_focus" {
+        bgcolor="#e6ecfa";
+label="main";
+labelloc="t";
+labeljust="c";
+fontsize="18";
+        
+        "github.com/yongman/leto/cmd.init#1" [ penwidth="0.5" tooltip="github.com/yongman/leto/cmd.init#1 | defined in main.go:28\nat main.go:29: calling [flag.StringVar]\nat main.go:30: calling [flag.StringVar]\nat main.go:31: calling [flag.StringVar]\nat main.go:32: calling [flag.StringVar]\nat main.go:33: calling [flag.StringVar]" fillcolor="lightblue" label="init#1" ]
+        "github.com/yongman/leto/cmd.init" [ fillcolor="lightblue" label="init" penwidth="0.5" tooltip="github.com/yongman/leto/cmd.init | defined in .:0\nat .:0: calling [github.com/yongman/leto/cmd.init#1]" ]
+        "github.com/yongman/leto/cmd.main" [ fillcolor="lightblue" label="main" penwidth="0.5" tooltip="github.com/yongman/leto/cmd.main | defined in main.go:36\nat main.go:37: calling [flag.Parse]\nat main.go:43: calling [github.com/yongman/leto/config.NewConfig]\nat main.go:45: calling [github.com/yongman/leto/server.NewApp]\nat main.go:48: calling [os/signal.Notify]\nat main.go:50: calling [(*github.com/yongman/leto/server.App).Run]" ]
+        
+        subgraph "cluster_flag" {
+        penwidth="0.8";
+fontsize="16";
+label="flag";
+tooltip="package: flag";
+style="filled";
+fillcolor="lightyellow";
+fontname="Tahoma bold";
+rank="sink";
+URL="/?f=flag";
+        
+        "flag.StringVar" [ fillcolor="moccasin" label="StringVar" penwidth="1.5" tooltip="flag.StringVar | defined in flag.go:850" ]
+        "flag.Parse" [ fillcolor="moccasin" label="Parse" penwidth="1.5" tooltip="flag.Parse | defined in flag.go:1135" ]
+        
+    }
+
+        subgraph "cluster_github.com/yongman/leto/config" {
+        URL="/?f=github.com/yongman/leto/config";
+style="filled";
+fillcolor="lightyellow";
+fontname="Tahoma bold";
+rank="sink";
+label="config";
+tooltip="package: github.com/yongman/leto/config";
+penwidth="0.8";
+fontsize="16";
+        
+        "github.com/yongman/leto/config.NewConfig" [ fillcolor="moccasin" label="NewConfig" penwidth="1.5" tooltip="github.com/yongman/leto/config.NewConfig | defined in config.go:12" ]
+        
+    }
+
+        subgraph "cluster_github.com/yongman/leto/server" {
+        fontsize="16";
+fontname="Tahoma bold";
+rank="sink";
+label="server";
+tooltip="package: github.com/yongman/leto/server";
+penwidth="0.8";
+style="filled";
+fillcolor="lightyellow";
+URL="/?f=github.com/yongman/leto/server";
+        
+        "github.com/yongman/leto/server.NewApp" [ tooltip="github.com/yongman/leto/server.NewApp | defined in server.go:24" fillcolor="moccasin" label="NewApp" penwidth="1.5" ]
+        "(*github.com/yongman/leto/server.App).Run" [ fillcolor="moccasin" label="(*App).Run" penwidth="1.5" tooltip="(*github.com/yongman/leto/server.App).Run | defined in server.go:63" ]
+        
+    }
+
+        subgraph "cluster_os/signal" {
+        fillcolor="lightyellow";
+fontname="Tahoma bold";
+rank="sink";
+label="signal";
+style="filled";
+fontsize="16";
+URL="/?f=os/signal";
+tooltip="package: os/signal";
+penwidth="0.8";
+        
+        "os/signal.Notify" [ fillcolor="moccasin" label="Notify" penwidth="1.5" tooltip="os/signal.Notify | defined in signal.go:121" ]
+        
+    }
+
+    }
+
+    "github.com/yongman/leto/cmd.init#1" -> "flag.StringVar" [ color="saddlebrown" tooltip="at main.go:29: calling [flag.StringVar]\nat main.go:30: calling [flag.StringVar]\nat main.go:31: calling [flag.StringVar]\nat main.go:32: calling [flag.StringVar]\nat main.go:33: calling [flag.StringVar]" ]
+    "github.com/yongman/leto/cmd.init" -> "github.com/yongman/leto/cmd.init#1" [ tooltip="at .:0: calling [github.com/yongman/leto/cmd.init#1]" ]
+    "github.com/yongman/leto/cmd.main" -> "flag.Parse" [ color="saddlebrown" tooltip="at main.go:37: calling [flag.Parse]" ]
+    "github.com/yongman/leto/cmd.main" -> "github.com/yongman/leto/config.NewConfig" [ color="saddlebrown" tooltip="at main.go:43: calling [github.com/yongman/leto/config.NewConfig]" ]
+    "github.com/yongman/leto/cmd.main" -> "github.com/yongman/leto/server.NewApp" [ color="saddlebrown" tooltip="at main.go:45: calling [github.com/yongman/leto/server.NewApp]" ]
+    "github.com/yongman/leto/cmd.main" -> "os/signal.Notify" [ color="saddlebrown" tooltip="at main.go:48: calling [os/signal.Notify]" ]
+    "github.com/yongman/leto/cmd.main" -> "(*github.com/yongman/leto/server.App).Run" [ arrowhead="normalnoneodot" color="saddlebrown" tooltip="at main.go:50: calling [(*github.com/yongman/leto/server.App).Run]" ]
+}
